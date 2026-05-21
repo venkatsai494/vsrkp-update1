@@ -1,16 +1,27 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.Arrays;
 
 public class UpdateProfilePageTest {
     @Test
     public void testUpdateProfilePage() throws InterruptedException {
+        PasswordEncryptionDecryption p = new PasswordEncryptionDecryption();
         WebDriver driver = new ChromeDriver();
-        driver.get("https://www.naukri.com/mnjuser/profile?id=&altresid");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driver.get("https://www.naukri.com/nlogin/login");
+        System.out.println("TITLE: " + driver.getTitle());
+        System.out.println("URL: " + driver.getCurrentUrl());
+        System.out.println(driver.getPageSource());
         driver.manage().window().maximize();
-        driver.findElement(By.id("usernameField")).sendKeys("venkatsai494@gmail.com");
-        driver.findElement(By.id("passwordField")).sendKeys("");
+        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameField")));
+        username.sendKeys("venkatsai494@gmail.com");
         driver.findElement(By.xpath("//button[text()='Login']")).click();
         Thread.sleep(3000);
         driver.navigate().to("https://www.naukri.com/mnjuser/profile?id=&altresid");
@@ -18,6 +29,5 @@ public class UpdateProfilePageTest {
         driver.findElement(By.xpath("//em[contains(@class,'edit')]")).click();
         Thread.sleep(3000);
         driver.findElement(By.id("saveBasicDetailsBtn")).click();
-
     }
 }
