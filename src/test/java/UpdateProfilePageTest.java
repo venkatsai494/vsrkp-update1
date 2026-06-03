@@ -1,3 +1,4 @@
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,19 +16,26 @@ public class UpdateProfilePageTest {
         PasswordEncryptionDecryption p = new PasswordEncryptionDecryption();
         WebDriver driver = new ChromeDriver();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        driver.get("https://www.naukri.com/nlogin/login");
-        System.out.println("TITLE: " + driver.getTitle());
-        System.out.println("URL: " + driver.getCurrentUrl());
-        System.out.println(driver.getPageSource());
-        driver.manage().window().maximize();
-        WebElement username = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("usernameField")));
-        username.sendKeys("venkatsai494@gmail.com");
-        driver.findElement(By.xpath("//button[text()='Login']")).click();
-        Thread.sleep(3000);
-        driver.navigate().to("https://www.naukri.com/mnjuser/profile?id=&altresid");
-        Thread.sleep(3000);
-        driver.findElement(By.xpath("//em[contains(@class,'edit')]")).click();
-        Thread.sleep(3000);
-        driver.findElement(By.id("saveBasicDetailsBtn")).click();
+        try{
+            driver.get("https://www.naukri.com/nlogin/login");
+            System.out.println("TITLE: " + driver.getTitle());
+            System.out.println("URL: " + driver.getCurrentUrl());
+            System.out.println(driver.getPageSource());
+            driver.manage().window().maximize();
+            driver.findElement(By.id("usernameField")).sendKeys("venkatsai494@gmail.com");
+            driver.findElement(By.id("passwordField")).sendKeys(p.decryptPassword(System.getenv("PASSWORD")));
+            driver.findElement(By.xpath("//button[text()='Login']")).click();
+            Thread.sleep(3000);
+            driver.navigate().to("https://www.naukri.com/mnjuser/profile?id=&altresid");
+            Thread.sleep(3000);
+            driver.findElement(By.xpath("//em[contains(@class,'edit')]")).click();
+            Thread.sleep(3000);
+            driver.findElement(By.id("saveBasicDetailsBtn")).click();
+        }
+        catch (Exception e){
+            driver.quit();
+            e.printStackTrace();
+        }
+
     }
 }
