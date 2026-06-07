@@ -2,6 +2,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -11,7 +12,14 @@ public class UpdateProfilePageTest {
     @Test
     public void testUpdateProfilePage() throws InterruptedException {
         PasswordEncryptionDecryption p = new PasswordEncryptionDecryption();
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+        }
+        WebDriver driver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         try{
             driver.get("https://www.naukri.com/nlogin/login");
