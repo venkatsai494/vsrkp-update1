@@ -14,11 +14,11 @@ public class UpdateProfilePageTest {
         PasswordEncryptionDecryption p = new PasswordEncryptionDecryption();
         ChromeOptions options = new ChromeOptions();
 
-        if (System.getenv("GITHUB_ACTIONS") != null) {
-            options.addArguments("--headless=new");
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-        }
+//        if (System.getenv("GITHUB_ACTIONS") != null) {
+//            options.addArguments("--headless=new");
+//            options.addArguments("--no-sandbox");
+//            options.addArguments("--disable-dev-shm-usage");
+//        }
         WebDriver driver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         try{
