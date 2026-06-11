@@ -1,5 +1,6 @@
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -26,7 +27,7 @@ public class UpdateProfilePageTest {
             System.out.println("TITLE: " + driver.getTitle());
             System.out.println("URL: " + driver.getCurrentUrl());
             System.out.println(driver.getPageSource());
-            driver.manage().window().maximize();
+            driver.manage().window().setSize(new Dimension(1920, 1080));
             driver.findElement(By.id("usernameField")).sendKeys("venkatsai494@gmail.com");
             driver.findElement(By.id("passwordField")).sendKeys(p.decryptPassword(System.getenv("PASSWORD")));
             driver.findElement(By.xpath("//button[text()='Login']")).click();
