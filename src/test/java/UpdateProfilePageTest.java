@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -37,6 +38,8 @@ public class UpdateProfilePageTest {
             driver.findElement(By.xpath("//em[contains(@class,'edit')]")).click();
             Thread.sleep(3000);
             driver.findElement(By.id("saveBasicDetailsBtn")).click();
+            Thread.sleep(3000);
+            Assert.assertTrue(driver.findElements(By.xpath("//div/span[text()='Profile updated successfully']")).size()>0);
         }
         catch (Exception e){
             driver.quit();
