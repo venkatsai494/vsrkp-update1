@@ -32,7 +32,7 @@ public class UpdateProfilePageTest {
             driver.findElement(By.id("usernameField")).sendKeys("venkatsai494@gmail.com");
             driver.findElement(By.id("passwordField")).sendKeys(p.decryptPassword(System.getenv("PASSWORD")));
             driver.findElement(By.xpath("//button[text()='Login']")).click();
-            Thread.sleep(3000);
+            Thread.sleep(10000);
             driver.navigate().to("https://www.naukri.com/mnjuser/profile?id=&altresid");
             Thread.sleep(3000);
             driver.findElement(By.xpath("//em[contains(@class,'edit')]")).click();
