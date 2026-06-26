@@ -27,7 +27,9 @@ public class UpdateProfilePageTest {
             driver.get("https://www.naukri.com/nlogin/login");
             System.out.println("TITLE: " + driver.getTitle());
             System.out.println("URL: " + driver.getCurrentUrl());
+            System.out.println("************************************Page source starts here************************");
             System.out.println(driver.getPageSource());
+            System.out.println("************************************Page source ends here**************************");
             driver.manage().window().setSize(new Dimension(1920, 1080));
             driver.findElement(By.id("usernameField")).sendKeys("venkatsai494@gmail.com");
             driver.findElement(By.id("passwordField")).sendKeys(p.decryptPassword(System.getenv("PASSWORD")));
