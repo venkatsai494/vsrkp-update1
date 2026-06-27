@@ -44,8 +44,12 @@ public class UpdateProfilePageTest {
             Assert.assertTrue(driver.findElements(By.xpath("//div/span[text()='Profile updated successfully']")).size()>0);
         }
         catch (Exception e){
-            driver.quit();
+
             e.printStackTrace();
+            throw e;
+        }
+        finally{
+            driver.quit();
         }
 
     }
