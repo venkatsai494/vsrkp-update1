@@ -1,13 +1,13 @@
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.time.Duration;
 
 public class UpdateProfilePageTest {
@@ -52,5 +52,24 @@ public class UpdateProfilePageTest {
             driver.quit();
         }
 
+    }
+    private void takeScreenshot(WebDriver driver) {
+
+        try {
+
+            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+            File dest = new File("screenshots/" +
+                    System.currentTimeMillis() + ".png");
+
+            dest.getParentFile().mkdirs();
+
+            Files.copy(src.toPath(), dest.toPath());
+
+            System.out.println("Screenshot saved to: " + dest.getAbsolutePath());
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
