@@ -44,30 +44,22 @@ public class UpdateProfilePageTest {
             Assert.assertTrue(driver.findElements(By.xpath("//div/span[text()='Profile updated successfully']")).size()>0);
         }
         catch (Exception e){
-
             e.printStackTrace();
             throw e;
         }
         finally{
             driver.quit();
         }
-
     }
     private void takeScreenshot(WebDriver driver) {
 
         try {
-
             File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-
             File dest = new File("screenshots/" +
                     System.currentTimeMillis() + ".png");
-
             dest.getParentFile().mkdirs();
-
             Files.copy(src.toPath(), dest.toPath());
-
             System.out.println("Screenshot saved to: " + dest.getAbsolutePath());
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
