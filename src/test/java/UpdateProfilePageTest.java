@@ -9,19 +9,30 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.nio.file.Files;
 import java.time.Duration;
+import org.testng.Reporter;
 
 public class UpdateProfilePageTest {
+    private WebDriver driver;
+
     @Test
-    public void testUpdateProfilePage() throws InterruptedException {
+    public void testUpdateProfilePage() throws Exception {
         PasswordEncryptionDecryption p = new PasswordEncryptionDecryption();
         ChromeOptions options = new ChromeOptions();
 
-//        if (System.getenv("GITHUB_ACTIONS") != null) {
-//            options.addArguments("--headless=new");
-//            options.addArguments("--no-sandbox");
-//            options.addArguments("--disable-dev-shm-usage");
-//        }
-        WebDriver driver = new ChromeDriver(options);
+        // When running in GitHub Actions use headless and safe flags
+        if (System.getenv("GITHUB_ACTIONS") != null) {
+            options.addArguments("--headless=new");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+        }
+        this.driver = new ChromeDriver(options);
+        // register driver on the current test result so listeners can access it
+        try {
+            Reporter.getCurrentTestResult().setAttribute("driver", this.driver);
+        } catch (Exception ignored) {
+            // ignore if not available
+        }
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         try{
             driver.get("https://www.naukri.com/nlogin/login");
@@ -43,12 +54,25 @@ public class UpdateProfilePageTest {
             Thread.sleep(3000);
             Assert.assertTrue(driver.findElements(By.xpath("//div/span[text()='Profile updated successfully']")).size()>0);
         }
-        catch (Exception e){
-            e.printStackTrace();
-            throw e;
+        catch (Throwable t){
+            // on any failure (exceptions or assertion errors) take screenshot
+            try {
+                takeScreenshot(this.driver);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            t.printStackTrace();
+            // rethrow preserving type if possible
+            if (t instanceof Exception) {
+                throw (Exception) t;
+            } else {
+                throw new RuntimeException(t);
+            }
         }
         finally{
-            driver.quit();
+            if (this.driver != null) {
+                this.driver.quit();
+            }
         }
     }
     private void takeScreenshot(WebDriver driver) {
